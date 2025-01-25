@@ -6,8 +6,8 @@ const SPACEX_API = 'https://api.spacexdata.com/v5/launches';
 
 export const spaceXService = {
   async getNextLaunch(): Promise<Launch> {
-    const response = await fetch(`${SPACEX_API}/next`);
-    return response.json();
+    const response = await axios.get(`${SPACEX_API}/next`);
+    return response.data as Launch;
   },
 
   async getLaunches(filter: 'all' | 'success' | 'failed' = 'all'): Promise<Launch[]> {
