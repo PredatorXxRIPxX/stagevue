@@ -1,32 +1,28 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div class="container mx-auto p-4 max-w-2xl">
+    <h1 class="text-4xl font-bold mb-6 text-center">Lancements SpaceX</h1>
+    
+    <NextLaunch class="mb-6" />
+    <LaunchList @select-launch="openLaunchModal" />
+    
+    <LaunchModal 
+      v-if="selectedLaunch" 
+      :launch="selectedLaunch"
+      @close="selectedLaunch = null"
+    />
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
+<script setup lang="ts">
+import { ref } from 'vue';
+import NextLaunch from './components/NextLaunch.vue';
+import LaunchList from './components/LaunchList.vue';
+import LaunchModal from './components/LaunchModal.vue';
+import type { Launch } from './types/Launch';
 
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
+const selectedLaunch = ref<Launch | null>(null);
 
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+const openLaunchModal = (launch: Launch) => {
+  selectedLaunch.value = launch;
+};
+</script>
