@@ -20,8 +20,10 @@ export const spaceXService = {
       launches = launches.filter(launch => launch.success);
     } else if (filter === 'failed') {
       launches = launches.filter(launch => !launch.success);
+    } else {
+      launches = launches
     }
     
-    return launches.slice(0, 10);
+    return launches;
   }
 };
