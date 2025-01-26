@@ -29,10 +29,9 @@
                 </p>
 
 
-                <div v-if="launch.links.flickr.original.length">
+                <div v-if="launch.links.patch.large.length">
                     <p class="text-sm font-semibold text-gray-600">Mission Image:</p>
-                    <img :src="launch.links.flickr.original[0]" alt="Mission Image"
-                        class="w-full rounded-lg shadow-md" />
+                    <img :src="launch.links.patch.large" alt="Mission Image" class="w-full rounded-lg shadow-md" />
                 </div>
 
                 <div>
@@ -40,22 +39,23 @@
                     <p class="text-lg text-gray-800">{{ launch.launchpad }}</p>
                 </div>
 
-                <div>
+                <div v-if="launch.payloads.length">
                     <p class="text-sm font-semibold text-gray-600">Payloads:</p>
                     <ul class="list-disc pl-5 space-y-2">
                         <li v-for="(payload, index) in launch.payloads" :key="index" class="text-lg text-gray-800">
-                            <strong>Type:</strong> {{ payload.type }}<br />
-                            <strong>Clients:</strong> {{ payload.customers?.join(', ') || 'N/A' }}
+                            <strong>Type:</strong> {{ payload[0] }}<br />
+                            <strong>Clients:</strong> {{ payload || 'N/A' }}
                         </li>
                     </ul>
                 </div>
 
-                <div v-if="launch.links.article" class="mt-4">
+                <div class="mt-4">
                     <p class="text-sm font-semibold text-gray-600">Article:</p>
-                    <a :href="launch.links.article" target="_blank"
+                    <a v-if="launch.links.article" :href="launch.links.article" target="_blank"
                         class="text-blue-500 hover:text-blue-700 hover:underline transition-colors duration-200">
                         Read the article
                     </a>
+                    <p v-if="!launch.links.article" class="text-md text-gray-800">No article available</p>
                 </div>
 
                 <div class="mt-6">
@@ -66,7 +66,7 @@
                     </label>
 
                     <div v-if="showVideo && launch.links.webcast" class="mt-4">
-                        <iframe :src="launch.links.webcast" class="w-full h-64 rounded-lg shadow-md"
+                        <iframe width="640" height="390" :src="getYouTubeEmbedUrl(launch.links.webcast)" frameborder="0"
                             allowfullscreen></iframe>
                     </div>
                 </div>
@@ -93,6 +93,17 @@ const formatDate = (dateString: string) => {
         year: 'numeric',
     });
 };
+
+const getYouTubeEmbedUrl = (url: string) => {
+    const videoIdMatch = url.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+
+    if (videoIdMatch && videoIdMatch[1]) {
+        return `https://www.youtube.com/embed/${videoIdMatch[1]}`;
+    }
+
+    return url;
+};
+
 
 console.log(props.launch)
 </script>

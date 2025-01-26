@@ -16,8 +16,5 @@ export interface Launch {
     };
   };
   launchpad: string;
-  payloads: Array<{
-    type: string;
-    customers: string[];
-  }>;
+  payloads: [];
 }

@@ -23,7 +23,7 @@ export const spaceXService = {
     } else {
       launches = launches
     }
-    console.log(launches);
+    
     return launches.slice(0, 10);
   }
 };
