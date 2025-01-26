@@ -2,13 +2,11 @@
   <div class="container mx-auto">
     <h1 class="text-6xl font-bold mb-6 text-center p-10">Lancements SpaceX</h1>
 
-    <!-- Next Launch Section -->
+   
     <NextLaunch class="mb-6" />
 
-    <!-- Launch List Section -->
     <LaunchList @select-launch="openLaunchModal" />
 
-    <!-- Launch Modal -->
     <LaunchModal v-if="selectedLaunch" :launch="selectedLaunch" @close="closeLaunchModal" />
   </div>
 </template>
